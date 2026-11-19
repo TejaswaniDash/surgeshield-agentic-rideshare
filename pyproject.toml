@@ -1,0 +1,34 @@
+[project]
+name = "surgeshield"
+version = "1.0.0"
+description = "Agentic AI for ride-hailing marketplace disruptions: ML + DL + RL + GenAI, RAG, A2A, A2UI, MCP, LangGraph, Temporal"
+requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "MIT" }
+dependencies = [
+  "numpy>=1.26", "pandas>=2.1", "pyarrow>=15", "scikit-learn>=1.4", "torch>=2.2",
+  "gymnasium>=0.29", "stable-baselines3>=2.3",
+  "pydantic>=2.6", "pyyaml>=6", "httpx>=0.27", "rank-bm25>=0.2.2",
+  "langgraph>=0.2", "temporalio>=1.7", "mcp>=1.2",
+  "fastapi>=0.110", "uvicorn>=0.29", "sse-starlette>=2.0",
+]
+
+[project.optional-dependencies]
+llm = ["anthropic>=0.40"]
+embeddings = ["sentence-transformers>=3.0"]
+dev = ["pytest>=8", "ruff>=0.5", "playwright>=1.44"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"

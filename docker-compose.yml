@@ -1,0 +1,53 @@
+# Full stack. API UI: http://localhost:8000/ui · Temporal UI: http://localhost:8233
+services:
+  postgresql:
+    image: postgres:16
+    environment: { POSTGRES_USER: temporal, POSTGRES_PASSWORD: temporal }
+    volumes: [pgdata:/var/lib/postgresql/data]
+
+  temporal:
+    image: temporalio/auto-setup:latest
+    depends_on: [postgresql]
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_USER: temporal
+      POSTGRES_PWD: temporal
+      POSTGRES_SEEDS: postgresql
+    ports: ["7233:7233"]
+
+  temporal-ui:
+    image: temporalio/ui:latest
+    depends_on: [temporal]
+    environment: { TEMPORAL_ADDRESS: temporal:7233 }
+    ports: ["8233:8080"]
+
+  api:   # A2A agents + control plane + A2UI stream; embeds a Temporal worker
+    build: .
+    depends_on: [temporal]
+    environment:
+      SURGESHIELD_RUNTIME: temporal
+      SURGESHIELD__TEMPORAL__ADDRESS: temporal:7233
+      SURGESHIELD__WORKFLOW__MONITOR_INTERVAL_MINUTES: "0.1"   # demo speed; use 15 in production
+      LLM_PROVIDER: ${LLM_PROVIDER:-mock}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports: ["8000:8000"]
+    restart: on-failure
+
+  worker:  # extra worker replicas scale activity throughput horizontally
+    build: .
+    depends_on: [temporal]
+    command: ["python", "-m", "surgeshield.temporal_app.worker"]
+    environment:
+      SURGESHIELD__TEMPORAL__ADDRESS: temporal:7233
+      LLM_PROVIDER: ${LLM_PROVIDER:-mock}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    restart: on-failure
+
+  mcp:     # MCP tools over streamable HTTP
+    build: .
+    command: ["python", "-m", "surgeshield.mcp_server.server", "--http", "8765"]
+    ports: ["8765:8765"]
+
+volumes:
+  pgdata:
