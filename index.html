@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SurgeShield · Ops Console (A2UI renderer)</title>
+<style>
+  :root { --bg:#0f1115; --panel:#171a21; --line:#262b36; --text:#e8eaf0; --muted:#8b93a7; --accent:#3ddc97; --warn:#ffb020; --bad:#ff5d5d; }
+  * { box-sizing: border-box; }
+  body { margin:0; font: 14px/1.45 Inter, system-ui, -apple-system, Segoe UI, sans-serif; background:var(--bg); color:var(--text); }
+  header { display:flex; align-items:center; gap:16px; padding:14px 20px; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--bg); z-index:2; }
+  header h1 { font-size:16px; margin:0; letter-spacing:.2px; }
+  header .sub { color:var(--muted); font-size:12px; }
+  .scen button { background:transparent; color:var(--text); border:1px solid var(--line); border-radius:999px; padding:6px 12px; margin-right:6px; cursor:pointer; }
+  .scen button:hover { border-color:var(--accent); color:var(--accent); }
+  main { display:grid; grid-template-columns: minmax(380px, 1.25fr) minmax(320px, 1fr) 640px; gap:16px; padding:16px 20px; }
+  section > h2 { font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin:0 0 10px; }
+  .a2-card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:12px; }
+  .a2-col { display:flex; flex-direction:column; gap:6px; }
+  .a2-row { display:flex; justify-content:space-between; gap:12px; align-items:center; }
+  .a2-h2 { font-size:17px; font-weight:650; margin:0 0 4px; }
+  .a2-h4 { font-size:14px; font-weight:600; margin:4px 0; }
+  .a2-caption { color:var(--muted); font-size:12px; }
+  .a2-body { font-size:13.5px; }
+  hr.a2-div { border:0; border-top:1px solid var(--line); margin:8px 0; width:100%; }
+  button.a2-btn { border:1px solid var(--line); background:#1f2430; color:var(--text); padding:8px 14px; border-radius:10px; cursor:pointer; font-weight:600; }
+  button.a2-btn.primary { background:var(--accent); color:#06281a; border-color:var(--accent); }
+  button.a2-btn:disabled { opacity:.45; cursor:default; }
+  .log { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:10px 12px; height:calc(100vh - 140px); overflow:auto; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .log div { padding:2px 0; border-bottom:1px dashed #20242e; }
+  .log .st { color:var(--accent); }
+  .log .cmp { color:var(--warn); }
+  .phones { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+  .phone { background:#000; border:1px solid var(--line); border-radius:34px; padding:16px 12px; min-height:560px; }
+  .phone .bar { text-align:center; color:var(--muted); font-size:11px; margin-bottom:10px; }
+  .phone .a2-card { border-radius:16px; }
+  .pill { font-size:11px; padding:2px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); }
+  .empty { color:var(--muted); font-size:13px; padding:8px 2px; }
+  select { background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:4px 8px; }
+</style>
+</head>
+<body>
+<header>
+  <div><h1>SurgeShield</h1><div class="sub">Agentic disruption response · A2A agents · A2UI surfaces · durable workflows</div></div>
+  <div class="scen" id="scen"></div>
+  <div style="margin-left:auto" class="sub">incident <select id="incSel"></select> <span class="pill" id="state">-</span></div>
+</header>
+<main>
+  <section><h2>Ops console (agent-generated UI)</h2><div id="ops"><div class="empty">Run a scenario to start an incident.</div></div></section>
+  <section><h2>Agent trace</h2><div class="log" id="log"></div></section>
+  <section><h2>Driver &amp; rider apps (same A2UI stream)</h2>
+    <div class="phones">
+      <div class="phone"><div class="bar">Driver app</div><div id="driver"></div></div>
+      <div class="phone"><div class="bar">Rider app</div><div id="rider"></div></div>
+    </div>
+  </section>
+</main>
+<script>
+// ---------------------------------------------------------------- minimal A2UI v0.8 renderer
+// Renders only catalog components (Text, Column, Row, Card, Button, Divider). Agents send data, never code.
+const surfaces = {};   // surfaceId -> {components:{}, data:{}, root:null, incidentId}
+const lookup = (data, path) => path.replace(/^\//, '').split('/').filter(Boolean).reduce((o, k) => (o ?? {})[k], data);
+const val = (v, data) => v == null ? '' : ('literalString' in v ? v.literalString : ('path' in v ? (lookup(data, v.path) ?? '') : ''));
+function decodeContents(contents) {
+  const out = {};
+  for (const c of contents) {
+    if ('valueString' in c) out[c.key] = c.valueString;
+    else if ('valueNumber' in c) out[c.key] = c.valueNumber;
+    else if ('valueBoolean' in c) out[c.key] = c.valueBoolean;
+    else if ('valueMap' in c) out[c.key] = decodeContents(c.valueMap);
+  }
+  return out;
+}
+function handle(msg) {
+  const iid = msg.incidentId;
+  if (msg.surfaceUpdate) {
+    const s = surfaces[msg.surfaceUpdate.surfaceId] ??= {components:{}, data:{}, root:null, incidentId:iid};
+    for (const c of msg.surfaceUpdate.components) s.components[c.id] = c.component;
+  } else if (msg.dataModelUpdate) {
+    const s = surfaces[msg.dataModelUpdate.surfaceId] ??= {components:{}, data:{}, root:null, incidentId:iid};
+    Object.assign(s.data, decodeContents(msg.dataModelUpdate.contents));
+    if (s.root) paint(msg.dataModelUpdate.surfaceId);
+    if (s.data.status && iid === current) document.getElementById('state').textContent = s.data.status;
+  } else if (msg.beginRendering) {
+    const s = surfaces[msg.beginRendering.surfaceId]; s.root = msg.beginRendering.root; paint(msg.beginRendering.surfaceId);
+  } else if (msg.deleteSurface) {
+    delete surfaces[msg.deleteSurface.surfaceId]; document.getElementById('sf-' + msg.deleteSurface.surfaceId)?.remove();
+  }
+  if (iid && !incidents.has(iid)) { incidents.add(iid); const o = document.createElement('option'); o.value = o.textContent = iid; incSel.appendChild(o); if (!current) select(iid); }
+}
+function build(sid, id) {
+  const s = surfaces[sid], comp = s.components[id]; if (!comp) return document.createTextNode('');
+  const [type, p] = Object.entries(comp)[0];
+  const el = (tag, cls) => { const e = document.createElement(tag); if (cls) e.className = cls; return e; };
+  switch (type) {
+    case 'Column': case 'Row': { const e = el('div', type === 'Column' ? 'a2-col' : 'a2-row'); for (const c of p.children.explicitList) e.appendChild(build(sid, c)); return e; }
+    case 'Card': { const e = el('div', 'a2-card'); e.appendChild(build(sid, p.child)); return e; }
+    case 'Divider': return el('hr', 'a2-div');
+    case 'Text': { const e = el('div', 'a2-' + (p.usageHint || 'body')); e.textContent = val(p.text, s.data); return e; }
+    case 'Button': {
+      const e = el('button', 'a2-btn' + (p.primary ? ' primary' : '')); e.appendChild(build(sid, p.child));
+      e.onclick = async () => {
+        const ctx = Object.fromEntries((p.action.context || []).map(kv => [kv.key, val(kv.value, s.data)]));
+        e.closest('.a2-row')?.querySelectorAll('button').forEach(b => b.disabled = true);
+        await fetch('/a2ui/action', {method:'POST', headers:{'content-type':'application/json'},
+          body: JSON.stringify({userAction:{name:p.action.name, surfaceId:sid, sourceComponentId:id, timestamp:new Date().toISOString(), context:ctx}})});
+      };
+      return e;
+    }
+    default: return document.createTextNode('');
+  }
+}
+function paint(sid) {
+  const s = surfaces[sid]; if (!s.root || s.incidentId !== current) return;
+  const host = sid.startsWith('ops-') ? 'ops' : sid.startsWith('driver-') ? 'driver' : 'rider';
+  const container = document.getElementById(host); container.querySelector('.empty')?.remove();
+  let wrap = document.getElementById('sf-' + sid);
+  if (!wrap) { wrap = document.createElement('div'); wrap.id = 'sf-' + sid; container.appendChild(wrap); }
+  wrap.replaceChildren(build(sid, s.root));
+}
+// ---------------------------------------------------------------- app shell
+const incidents = new Set(); let current = null; const incSel = document.getElementById('incSel');
+function select(iid) { current = iid; incSel.value = iid; ['ops','driver','rider'].forEach(h => document.getElementById(h).replaceChildren());
+  Object.keys(surfaces).forEach(paint); }
+incSel.onchange = () => select(incSel.value);
+new EventSource('/a2ui/stream').onmessage = e => handle(JSON.parse(e.data));
+fetch('/scenarios').then(r => r.json()).then(list => list.forEach(n => {
+  const b = document.createElement('button'); b.textContent = n.replace('_', ' ');
+  b.onclick = async () => { const r = await (await fetch(`/scenarios/${n}/run`, {method:'POST'})).json(); if (r.incidents?.[0]) setTimeout(() => select(r.incidents[0]), 300); };
+  document.getElementById('scen').appendChild(b);
+}));
+setInterval(async () => {
+  if (!current) return; const r = await fetch('/incidents/' + current); if (!r.ok) return; const st = await r.json();
+  document.getElementById('state').textContent = st.state;
+  document.getElementById('log').innerHTML = (st.events || []).map(e =>
+    `<div class="${e.startsWith('[') ? 'st' : e.startsWith('compliance') ? 'cmp' : ''}">${e.replace(/</g,'&lt;')}</div>`).join('');
+}, 700);
+</script>
+</body>
+</html>

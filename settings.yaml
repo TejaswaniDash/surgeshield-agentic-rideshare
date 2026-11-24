@@ -1,0 +1,76 @@
+# SurgeShield configuration. Every value can be overridden with an env var:
+# SURGESHIELD__<SECTION>__<KEY>=value   e.g. SURGESHIELD__LLM__PROVIDER=anthropic
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  bin_minutes: 15
+  # Public NYC TLC High Volume FHV trip records (Uber = hvfhs_license_num HV0003)
+  tlc_base_url: https://d37ci6vzurychx.cloudfront.net/trip-data
+  tlc_zone_lookup_url: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
+  months: ["2024-03"]           # months to download for the real-data path
+  uber_license: HV0003
+  synthetic_days: 21
+
+llm:
+  provider: mock                # mock | anthropic | openai  (openai = any OpenAI-compatible server, e.g. Ollama/vLLM)
+  model: claude-sonnet-5-5
+  openai_base_url: http://localhost:11434/v1
+  openai_model: llama3.1
+  temperature: 0.2
+  max_tokens: 1200
+  max_repair_attempts: 2
+
+rag:
+  chunk_size: 700
+  chunk_overlap: 120
+  top_k: 5
+  index_path: artifacts/rag_index.pkl
+
+models:
+  forecaster_path: artifacts/forecaster.pt
+  wait_model_path: artifacts/wait_model.pkl
+  anomaly_path: artifacts/anomaly.pkl
+  rl_policy_path: artifacts/ppo_repositioning.zip
+  lookback_bins: 16
+  horizon_bins: 4
+
+rl:
+  episode_steps: 16            # 16 x 15 min = 4 hours
+  train_timesteps: 250000
+  bonus_levels_usd: [0, 2, 5, 8]
+  margin_per_trip_usd: 6.0
+  unmet_penalty_usd: 5.0
+
+policy:                         # hard constraints enforced by the Compliance agent (deterministic layer)
+  surge_cap_normal: 2.5
+  # declared emergency => 60-day-range cap (NY GBL 396-r / 2014 NY AG agreement; see knowledge/policies)
+  incentive_auto_approve_usd: 500
+  incentive_hard_budget_usd: 5000
+  max_driver_messages_per_hour: 2
+  wav_min_share_of_incentivized_supply: 0.0   # set >0 to require accessible-vehicle coverage in plans
+  # NYC TLC HVFHS minimum driver pay, effective 2026-03-01 (https://www.nyc.gov/site/tlc/about/driver-pay-rates.page)
+  tlc_min_per_mile: 1.283
+  tlc_min_per_mile_wav: 1.601
+  tlc_min_per_minute: 0.681
+  emergency_surge_fallback_cap: 1.5
+  crz_fee_hvfhv_usd: 1.50
+
+workflow:
+  approval_timeout_minutes: 10
+  monitor_interval_minutes: 15
+  max_monitor_cycles: 8
+  recovery_wait_minutes: 6.0    # median wait below this ...
+  recovery_min_fulfillment: 0.9 # ... and >= 90% of requests served => recovered
+  max_replans: 3
+  time_scale: 0.0               # local runner: 0 = don't actually sleep, 1 = real time
+
+temporal:
+  address: localhost:7233
+  namespace: default
+  task_queue: surgeshield
+
+api:
+  host: 0.0.0.0
+  port: 8000
+  public_base_url: http://localhost:8000

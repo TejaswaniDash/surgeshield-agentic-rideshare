@@ -1,0 +1,220 @@
+[
+  {
+    "kind": "arena_letout",
+    "zones": [
+      186
+    ],
+    "start": "2024-03-15 22:45:00",
+    "end": "2024-03-15 23:30:00",
+    "multiplier": 4.010530609131149,
+    "spill_zones": [
+      100,
+      164,
+      230
+    ],
+    "spill_multiplier": 1.8,
+    "description": "Concert let-out at Madison Square Garden"
+  },
+  {
+    "kind": "arena_letout",
+    "zones": [
+      186
+    ],
+    "start": "2024-03-16 22:30:00",
+    "end": "2024-03-16 23:15:00",
+    "multiplier": 5.594138857504093,
+    "spill_zones": [
+      100,
+      164,
+      230
+    ],
+    "spill_multiplier": 1.8,
+    "description": "Concert let-out at Madison Square Garden"
+  },
+  {
+    "kind": "arena_letout",
+    "zones": [
+      186
+    ],
+    "start": "2024-03-21 22:45:00",
+    "end": "2024-03-21 23:30:00",
+    "multiplier": 4.935869905687442,
+    "spill_zones": [
+      100,
+      164,
+      230
+    ],
+    "spill_multiplier": 1.8,
+    "description": "Concert let-out at Madison Square Garden"
+  },
+  {
+    "kind": "arena_letout",
+    "zones": [
+      186
+    ],
+    "start": "2024-03-19 22:45:00",
+    "end": "2024-03-19 23:30:00",
+    "multiplier": 4.556851224201546,
+    "spill_zones": [
+      100,
+      164,
+      230
+    ],
+    "spill_multiplier": 1.8,
+    "description": "Concert let-out at Madison Square Garden"
+  },
+  {
+    "kind": "arena_letout",
+    "zones": [
+      186
+    ],
+    "start": "2024-03-14 22:30:00",
+    "end": "2024-03-14 23:15:00",
+    "multiplier": 4.509739175308249,
+    "spill_zones": [
+      100,
+      164,
+      230
+    ],
+    "spill_multiplier": 1.8,
+    "description": "Concert let-out at Madison Square Garden"
+  },
+  {
+    "kind": "arena_letout",
+    "zones": [
+      186
+    ],
+    "start": "2024-03-20 22:45:00",
+    "end": "2024-03-20 23:30:00",
+    "multiplier": 5.009096517915907,
+    "spill_zones": [
+      100,
+      164,
+      230
+    ],
+    "spill_multiplier": 1.8,
+    "description": "Concert let-out at Madison Square Garden"
+  },
+  {
+    "kind": "airport_bank",
+    "zones": [
+      132
+    ],
+    "start": "2024-03-12 20:00:00",
+    "end": "2024-03-12 22:00:00",
+    "multiplier": 2.8341295353710025,
+    "spill_zones": [
+      138
+    ],
+    "spill_multiplier": 1.4,
+    "description": "Delayed arrival bank at JFK"
+  },
+  {
+    "kind": "airport_bank",
+    "zones": [
+      132
+    ],
+    "start": "2024-03-24 20:00:00",
+    "end": "2024-03-24 22:00:00",
+    "multiplier": 2.6977433835529303,
+    "spill_zones": [
+      138
+    ],
+    "spill_multiplier": 1.4,
+    "description": "Delayed arrival bank at JFK"
+  },
+  {
+    "kind": "airport_bank",
+    "zones": [
+      132
+    ],
+    "start": "2024-03-15 20:00:00",
+    "end": "2024-03-15 22:00:00",
+    "multiplier": 2.9911681181455076,
+    "spill_zones": [
+      138
+    ],
+    "spill_multiplier": 1.4,
+    "description": "Delayed arrival bank at JFK"
+  },
+  {
+    "kind": "rainstorm",
+    "zones": [
+      132,
+      138,
+      161,
+      162,
+      163,
+      164,
+      186,
+      230,
+      48,
+      100,
+      170,
+      234,
+      79,
+      249,
+      68,
+      246,
+      107,
+      237,
+      142,
+      87
+    ],
+    "start": "2024-03-13 17:00:00",
+    "end": "2024-03-13 20:00:00",
+    "multiplier": 1.5,
+    "spill_zones": [],
+    "spill_multiplier": 1.0,
+    "description": "Heavy rain during evening rush"
+  },
+  {
+    "kind": "rainstorm",
+    "zones": [
+      132,
+      138,
+      161,
+      162,
+      163,
+      164,
+      186,
+      230,
+      48,
+      100,
+      170,
+      234,
+      79,
+      249,
+      68,
+      246,
+      107,
+      237,
+      142,
+      87
+    ],
+    "start": "2024-03-08 17:00:00",
+    "end": "2024-03-08 20:00:00",
+    "multiplier": 1.5,
+    "spill_zones": [],
+    "spill_multiplier": 1.0,
+    "description": "Heavy rain during evening rush"
+  },
+  {
+    "kind": "transit_outage",
+    "zones": [
+      164,
+      186,
+      100,
+      161
+    ],
+    "start": "2024-03-07 08:00:00",
+    "end": "2024-03-07 09:30:00",
+    "multiplier": 2.2,
+    "spill_zones": [
+      170,
+      68
+    ],
+    "spill_multiplier": 1.5,
+    "description": "Subway signal outage on 7th/8th Ave lines"
+  }
+]

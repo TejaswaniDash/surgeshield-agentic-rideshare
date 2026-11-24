@@ -1,0 +1,49 @@
+{
+  "forecaster": {
+    "lstm_mae": 2.4218430519104004,
+    "seasonal_naive_mae": 3.4566233158111572,
+    "lstm_mae_h1": 2.4040143489837646,
+    "n_train": 32240,
+    "n_val": 7700,
+    "train_sec": 25.9
+  },
+  "wait_model": {
+    "wait_mae_min": 0.8656377565899634,
+    "wait_mae_min_disrupted": 1.4915122344004448,
+    "baseline_mae_min_disrupted": 2.5675757575757574,
+    "baseline_mae_min": 0.9307896025281525
+  },
+  "anomaly": {
+    "bin_precision": 0.743,
+    "bin_recall": 0.101,
+    "event_recall": 1.0,
+    "alerts": 74,
+    "note": "bin recall is low by design: citywide 1.5x rain bins are labelled but are not alert-worthy"
+  },
+  "rl": {
+    "no_incentives": {
+      "mean_return": 178.18575,
+      "fulfillment_rate": 0.90088420716183,
+      "incentive_usd_per_episode": 0.0,
+      "mean_wait_min": 3.728318426538998
+    },
+    "greedy_heuristic": {
+      "mean_return": 179.33128442671506,
+      "fulfillment_rate": 0.9746314569933283,
+      "incentive_usd_per_episode": 2290.006953326549,
+      "mean_wait_min": 3.310459684598699
+    },
+    "ppo_residual": {
+      "mean_return": 187.88240128502096,
+      "fulfillment_rate": 0.9732913552541981,
+      "incentive_usd_per_episode": 1852.898709045131,
+      "mean_wait_min": 3.3262138973746183
+    },
+    "timesteps": 250000,
+    "train_sec": 177.9
+  },
+  "rag_index": {
+    "chunks": 24,
+    "documents": 10
+  }
+}

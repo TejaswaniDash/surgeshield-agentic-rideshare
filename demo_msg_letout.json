@@ -1,0 +1,859 @@
+{
+  "incident_id": "inc-186-202403142230",
+  "state": "CLOSED",
+  "fsm_history": [
+    {
+      "from": "DETECTED",
+      "to": "TRIAGED",
+      "reason": "classified as arena_letout (emergency=False)",
+      "at": ""
+    },
+    {
+      "from": "TRIAGED",
+      "to": "ASSESSING",
+      "reason": "assessment started",
+      "at": "2024-03-14 22:30:00"
+    },
+    {
+      "from": "ASSESSING",
+      "to": "PLANNING",
+      "reason": "plan v1",
+      "at": "2024-03-14 22:30:00"
+    },
+    {
+      "from": "PLANNING",
+      "to": "COMPLIANCE_REVIEW",
+      "reason": "compliance review",
+      "at": "2024-03-14 22:30:00"
+    },
+    {
+      "from": "COMPLIANCE_REVIEW",
+      "to": "PLANNING",
+      "reason": "plan v2",
+      "at": "2024-03-14 22:30:00"
+    },
+    {
+      "from": "PLANNING",
+      "to": "COMPLIANCE_REVIEW",
+      "reason": "compliance review",
+      "at": "2024-03-14 22:30:00"
+    },
+    {
+      "from": "COMPLIANCE_REVIEW",
+      "to": "AWAITING_APPROVAL",
+      "reason": "needs human approval",
+      "at": "2024-03-14 22:30:00"
+    },
+    {
+      "from": "AWAITING_APPROVAL",
+      "to": "READY",
+      "reason": "approved by ops-demo",
+      "at": ""
+    },
+    {
+      "from": "READY",
+      "to": "EXECUTING",
+      "reason": "committing plan inc-186-202403142230-c0-p2",
+      "at": ""
+    },
+    {
+      "from": "EXECUTING",
+      "to": "MONITORING",
+      "reason": "incentives live; monitoring KPIs",
+      "at": ""
+    },
+    {
+      "from": "MONITORING",
+      "to": "ASSESSING",
+      "reason": "assessment started",
+      "at": "2024-03-14 22:45:00"
+    },
+    {
+      "from": "ASSESSING",
+      "to": "PLANNING",
+      "reason": "plan v1",
+      "at": "2024-03-14 22:45:00"
+    },
+    {
+      "from": "PLANNING",
+      "to": "COMPLIANCE_REVIEW",
+      "reason": "compliance review",
+      "at": "2024-03-14 22:45:00"
+    },
+    {
+      "from": "COMPLIANCE_REVIEW",
+      "to": "AWAITING_APPROVAL",
+      "reason": "needs human approval",
+      "at": "2024-03-14 22:45:00"
+    },
+    {
+      "from": "AWAITING_APPROVAL",
+      "to": "READY",
+      "reason": "approved by ops-demo",
+      "at": ""
+    },
+    {
+      "from": "READY",
+      "to": "EXECUTING",
+      "reason": "committing plan inc-186-202403142230-c1-p1",
+      "at": ""
+    },
+    {
+      "from": "EXECUTING",
+      "to": "MONITORING",
+      "reason": "incentives live; monitoring KPIs",
+      "at": ""
+    },
+    {
+      "from": "MONITORING",
+      "to": "RESOLVING",
+      "reason": "recovered: wait 3.21 min, fulfillment 98%",
+      "at": ""
+    },
+    {
+      "from": "RESOLVING",
+      "to": "POSTMORTEM",
+      "reason": "writing postmortem",
+      "at": ""
+    },
+    {
+      "from": "POSTMORTEM",
+      "to": "CLOSED",
+      "reason": "incident closed",
+      "at": ""
+    }
+  ],
+  "disruption": {
+    "incident_id": "inc-186-202403142230",
+    "epicenter_zone": 186,
+    "affected_zones": [
+      100,
+      164,
+      170,
+      186,
+      230
+    ],
+    "detected_at": "2024-03-14 22:45:00",
+    "z_score": 7.64,
+    "demand_vs_base": 4.4,
+    "wait_med": 13.12,
+    "kind": "arena_letout",
+    "signals": [
+      "anomaly z=7.6",
+      "iso=0.79",
+      "venue_calendar"
+    ],
+    "declared_emergency": false,
+    "context_notes": "Concert at Madison Square Garden; doors close ~22:45."
+  },
+  "assessment": {
+    "severity": "high",
+    "forecasts": [
+      {
+        "zone_id": 100,
+        "zone_name": "Garment District",
+        "expected_requests": [
+          18.7,
+          15.9,
+          13.5,
+          11.5
+        ],
+        "baseline_requests": 10.0,
+        "idle_supply": 13.0,
+        "gap_next": 5.7,
+        "predicted_wait_min": 5.9
+      },
+      {
+        "zone_id": 164,
+        "zone_name": "Midtown South",
+        "expected_requests": [
+          11.9,
+          10.1,
+          8.6,
+          7.3
+        ],
+        "baseline_requests": 8.0,
+        "idle_supply": 12.6,
+        "gap_next": -0.7,
+        "predicted_wait_min": 4.2
+      },
+      {
+        "zone_id": 170,
+        "zone_name": "Murray Hill",
+        "expected_requests": [
+          5.5,
+          5.0,
+          4.8,
+          4.6
+        ],
+        "baseline_requests": 6.0,
+        "idle_supply": 16.6,
+        "gap_next": -11.2,
+        "predicted_wait_min": 3.2
+      },
+      {
+        "zone_id": 186,
+        "zone_name": "Penn Station/Madison Sq West",
+        "expected_requests": [
+          34.9,
+          29.6,
+          25.2,
+          21.4
+        ],
+        "baseline_requests": 13.0,
+        "idle_supply": 11.3,
+        "gap_next": 23.5,
+        "predicted_wait_min": 12.5
+      },
+      {
+        "zone_id": 230,
+        "zone_name": "Times Sq/Theatre District",
+        "expected_requests": [
+          32.3,
+          27.5,
+          23.3,
+          19.8
+        ],
+        "baseline_requests": 20.0,
+        "idle_supply": 12.5,
+        "gap_next": 19.8,
+        "predicted_wait_min": 10.2
+      },
+      {
+        "zone_id": 161,
+        "zone_name": "Midtown Center",
+        "expected_requests": [
+          6.8,
+          6.2,
+          6.0,
+          5.7
+        ],
+        "baseline_requests": 8.0,
+        "idle_supply": 23.8,
+        "gap_next": -17.0,
+        "predicted_wait_min": 3.2
+      },
+      {
+        "zone_id": 48,
+        "zone_name": "Clinton East",
+        "expected_requests": [
+          6.9,
+          6.3,
+          6.1,
+          5.8
+        ],
+        "baseline_requests": 6.0,
+        "idle_supply": 22.6,
+        "gap_next": -15.8,
+        "predicted_wait_min": 3.2
+      },
+      {
+        "zone_id": 68,
+        "zone_name": "East Chelsea",
+        "expected_requests": [
+          4.9,
+          4.4,
+          4.2,
+          3.9
+        ],
+        "baseline_requests": 6.0,
+        "idle_supply": 20.4,
+        "gap_next": -15.5,
+        "predicted_wait_min": 3.2
+      },
+      {
+        "zone_id": 246,
+        "zone_name": "West Chelsea/Hudson Yards",
+        "expected_requests": [
+          5.2,
+          4.8,
+          4.6,
+          4.4
+        ],
+        "baseline_requests": 7.0,
+        "idle_supply": 19.6,
+        "gap_next": -14.4,
+        "predicted_wait_min": 3.2
+      }
+    ],
+    "predicted_peak_wait_min": 12.5,
+    "expected_unmet_next_hour": 126.4,
+    "similar_incidents": [
+      "Postmortem - MSG concert let-out, Penn Station/MSG West (sample, synthetic): e-positioning 30 minutes before the published event end. Spillover zones (100, 164, 230) need smaller bonuses than the epicenter. Keep surge at 1.8x or below to protect rider trust; conversion dropped sharply above 2.0x.",
+      "Postmortem - JFK delayed arrival bank (sample, synthetic): ** LaGuardia was over-incentivized while its own demand was normal. That cost $900 of waste.\n\n**Lesson.** Size airport incentives with the forecast gap, not with demand alone. Do not mirror JFK actions to LGA by default."
+    ],
+    "model_versions": {
+      "forecaster": "lstm-v1",
+      "wait_model": "hgb-v1"
+    }
+  },
+  "plan": {
+    "plan_id": "inc-186-202403142230-c1-p1",
+    "version": 1,
+    "actions": [
+      {
+        "zone_id": 100,
+        "zone_name": "Garment District",
+        "relocation_bonus_usd": 0.0,
+        "expected_drivers_in": 0.0,
+        "surge_multiplier": 1.1,
+        "wav_bonus_usd": 0.0
+      },
+      {
+        "zone_id": 164,
+        "zone_name": "Midtown South",
+        "relocation_bonus_usd": 0.0,
+        "expected_drivers_in": 0.0,
+        "surge_multiplier": 1.0,
+        "wav_bonus_usd": 0.0
+      },
+      {
+        "zone_id": 170,
+        "zone_name": "Murray Hill",
+        "relocation_bonus_usd": 0.0,
+        "expected_drivers_in": 0.0,
+        "surge_multiplier": 1.0,
+        "wav_bonus_usd": 10.0
+      },
+      {
+        "zone_id": 186,
+        "zone_name": "Penn Station/Madison Sq West",
+        "relocation_bonus_usd": 5.0,
+        "expected_drivers_in": 49.8,
+        "surge_multiplier": 1.0,
+        "wav_bonus_usd": 10.0
+      },
+      {
+        "zone_id": 230,
+        "zone_name": "Times Sq/Theatre District",
+        "relocation_bonus_usd": 2.0,
+        "expected_drivers_in": 9.8,
+        "surge_multiplier": 1.1,
+        "wav_bonus_usd": 10.0
+      },
+      {
+        "zone_id": 161,
+        "zone_name": "Midtown Center",
+        "relocation_bonus_usd": 0.0,
+        "expected_drivers_in": 0.0,
+        "surge_multiplier": 1.0,
+        "wav_bonus_usd": 0.0
+      },
+      {
+        "zone_id": 48,
+        "zone_name": "Clinton East",
+        "relocation_bonus_usd": 0.0,
+        "expected_drivers_in": 0.0,
+        "surge_multiplier": 1.0,
+        "wav_bonus_usd": 0.0
+      },
+      {
+        "zone_id": 68,
+        "zone_name": "East Chelsea",
+        "relocation_bonus_usd": 0.0,
+        "expected_drivers_in": 0.0,
+        "surge_multiplier": 1.0,
+        "wav_bonus_usd": 0.0
+      },
+      {
+        "zone_id": 246,
+        "zone_name": "West Chelsea/Hudson Yards",
+        "relocation_bonus_usd": 0.0,
+        "expected_drivers_in": 0.0,
+        "surge_multiplier": 1.0,
+        "wav_bonus_usd": 0.0
+      }
+    ],
+    "incentive_budget_usd": 600.0,
+    "surge_cap_applied": 2.5,
+    "policy": "ppo_residual",
+    "expected_fulfillment": 0.924,
+    "expected_wait_min": 3.4,
+    "rationale": "The ppo_residual policy pre-positions drivers into the forecast shortfall: Penn Station/Madison Sq West ($5), Times Sq/Theatre District ($2). Bonuses scale with the predicted gap and are capped to keep total commitment at $600. Expected median wait 3.4 min. Addressed feedback: Add WAV bonus in zones [170, 186, 230]; Previous plan under-delivered: wait 5.2 min, fulfillment 68%.",
+    "feedback_addressed": [
+      "Add WAV bonus in zones [170, 186, 230]",
+      "Previous plan under-delivered: wait 5.2 min, fulfillment 68%"
+    ]
+  },
+  "review": {
+    "verdict": "needs_human_approval",
+    "findings": [
+      {
+        "rule_id": "R1_SURGE_CAP",
+        "status": "pass",
+        "detail": "All multipliers within normal cap 2.5x",
+        "citation": {
+          "doc_title": "Marketplace Disruption Playbook (sample internal policy)",
+          "source_url": "",
+          "chunk_id": "ae3e974c8b"
+        }
+      },
+      {
+        "rule_id": "R2_BUDGET_HARD",
+        "status": "pass",
+        "detail": "Budget $600 vs hard limit $5,000",
+        "citation": {
+          "doc_title": "Marketplace Disruption Playbook (sample internal policy)",
+          "source_url": "",
+          "chunk_id": "96f03f21eb"
+        }
+      },
+      {
+        "rule_id": "R3_AUTO_APPROVE",
+        "status": "warn",
+        "detail": "Budget $600 exceeds auto-approve limit $500",
+        "citation": {
+          "doc_title": "Marketplace Disruption Playbook (sample internal policy)",
+          "source_url": "",
+          "chunk_id": "96f03f21eb"
+        }
+      },
+      {
+        "rule_id": "R4_DRIVER_MIN_PAY",
+        "status": "pass",
+        "detail": "Incentives are additive; est. base pay $13.91 vs TLC minimum $12.87 for a 2.6 mi / 14 min trip",
+        "citation": {
+          "doc_title": "NYC TLC minimum pay standard for High-Volume FHV drivers",
+          "source_url": "https://www.nyc.gov/site/tlc/about/driver-pay-rates.page",
+          "chunk_id": "aa1a27b29e"
+        }
+      },
+      {
+        "rule_id": "R5_WAV_COVERAGE",
+        "status": "pass",
+        "detail": "WAV demand covered",
+        "citation": {
+          "doc_title": "Wheelchair-accessible service obligations for High-Volume FHV platforms",
+          "source_url": "https://www.nyc.gov/site/tlc/businesses/high-volume-for-hire-services.page",
+          "chunk_id": "811150272a"
+        }
+      },
+      {
+        "rule_id": "R6_EMERGENCY_CLASSIFICATION",
+        "status": "pass",
+        "detail": "classification arena_letout, declared_emergency=False",
+        "citation": {
+          "doc_title": "New York price-gouging law (GBL 396-r) and the 2014 Uber emergency surge agreement",
+          "source_url": "https://www.nysenate.gov/legislation/laws/GBS/396-R",
+          "chunk_id": "c4ee80f636"
+        }
+      },
+      {
+        "rule_id": "R7_FAIR_TARGETING",
+        "status": "pass",
+        "detail": "Incentives are zone-level and offered to all eligible drivers in range",
+        "citation": {
+          "doc_title": "Marketplace Disruption Playbook (sample internal policy)",
+          "source_url": "",
+          "chunk_id": "96f03f21eb"
+        }
+      },
+      {
+        "rule_id": "R8_UNTRUSTED_SIGNALS",
+        "status": "pass",
+        "detail": "No instruction-like content in external signals",
+        "citation": {
+          "doc_title": "Marketplace Disruption Playbook (sample internal policy)",
+          "source_url": "",
+          "chunk_id": "1091fe6345"
+        }
+      }
+    ],
+    "required_changes": [],
+    "summary": "Plan is compliant; human approval required (R3_AUTO_APPROVE)."
+  },
+  "comms": {
+    "driver_messages": [
+      {
+        "zone_id": 186,
+        "push_text": "High demand near Penn Station/Madison Sq West until 11:30 PM. Earn a $5 bonus for heading there.",
+        "details": "Requests near Penn Station/Madison Sq West are above normal. Arrive by 11:30 PM to receive a one-time $5 relocation bonus on top of your regular pay. Drive safely - follow all traffic laws.",
+        "language": "en"
+      },
+      {
+        "zone_id": 230,
+        "push_text": "High demand near Times Sq/Theatre District until 11:30 PM. Earn a $2 bonus for heading there.",
+        "details": "Requests near Times Sq/Theatre District are above normal. Arrive by 11:30 PM to receive a one-time $2 relocation bonus on top of your regular pay. Drive safely - follow all traffic laws.",
+        "language": "en"
+      }
+    ],
+    "rider_messages": [
+      {
+        "zone_id": 186,
+        "banner_text": "It's busier than usual near Penn Station/Madison Sq West. Pickup in about 3-5 min.",
+        "eta_range_min": [
+          3,
+          5
+        ],
+        "alternatives": [
+          "Wait & Save: lower price if you can wait 10-15 min",
+          "Shared ride where available",
+          "Subway/bus: check MTA service status"
+        ]
+      },
+      {
+        "zone_id": 100,
+        "banner_text": "It's busier than usual near Garment District. Pickup in about 3-5 min. Prices are higher than usual.",
+        "eta_range_min": [
+          3,
+          5
+        ],
+        "alternatives": [
+          "Wait & Save: lower price if you can wait 10-15 min",
+          "Shared ride where available",
+          "Subway/bus: check MTA service status"
+        ]
+      },
+      {
+        "zone_id": 164,
+        "banner_text": "It's busier than usual near Midtown South. Pickup in about 3-5 min.",
+        "eta_range_min": [
+          3,
+          5
+        ],
+        "alternatives": [
+          "Wait & Save: lower price if you can wait 10-15 min",
+          "Shared ride where available",
+          "Subway/bus: check MTA service status"
+        ]
+      },
+      {
+        "zone_id": 170,
+        "banner_text": "It's busier than usual near Murray Hill. Pickup in about 3-5 min.",
+        "eta_range_min": [
+          3,
+          5
+        ],
+        "alternatives": [
+          "Wait & Save: lower price if you can wait 10-15 min",
+          "Shared ride where available",
+          "Subway/bus: check MTA service status"
+        ]
+      },
+      {
+        "zone_id": 230,
+        "banner_text": "It's busier than usual near Times Sq/Theatre District. Pickup in about 3-5 min. Prices are higher than usual.",
+        "eta_range_min": [
+          3,
+          5
+        ],
+        "alternatives": [
+          "Wait & Save: lower price if you can wait 10-15 min",
+          "Shared ride where available",
+          "Subway/bus: check MTA service status"
+        ]
+      }
+    ],
+    "ops_brief": "Arena let-out detected at Penn Station/Madison Sq West (4.4x normal demand). Plan v1: $600 relocation incentives across 2 zones, surge capped at 2.50x. Expected median wait 3.4 min (fulfillment 92%)."
+  },
+  "kpis": [
+    {
+      "clock": "2024-03-14 22:30:00",
+      "wait_min": 3.66,
+      "fulfillment": 0.867,
+      "demand": 128,
+      "served": 111,
+      "incentive_spend_usd": 177.74,
+      "by_zone": {
+        "100": {
+          "wait": 3.2,
+          "demand": 9,
+          "idle": 9.7
+        },
+        "164": {
+          "wait": 3.2,
+          "demand": 13,
+          "idle": 12.8
+        },
+        "170": {
+          "wait": 3.2,
+          "demand": 10,
+          "idle": 9.8
+        },
+        "186": {
+          "wait": 3.2,
+          "demand": 44,
+          "idle": 58.7
+        },
+        "230": {
+          "wait": 4.3,
+          "demand": 52,
+          "idle": 37.6
+        }
+      }
+    },
+    {
+      "clock": "2024-03-14 22:45:00",
+      "wait_min": 5.2,
+      "fulfillment": 0.678,
+      "demand": 121,
+      "served": 82,
+      "incentive_spend_usd": 233.94,
+      "by_zone": {
+        "100": {
+          "wait": 5.6,
+          "demand": 22,
+          "idle": 12.5
+        },
+        "164": {
+          "wait": 3.3,
+          "demand": 14,
+          "idle": 13.3
+        },
+        "170": {
+          "wait": 3.2,
+          "demand": 6,
+          "idle": 10.4
+        },
+        "186": {
+          "wait": 3.5,
+          "demand": 41,
+          "idle": 36.4
+        },
+        "230": {
+          "wait": 7.8,
+          "demand": 38,
+          "idle": 15.9
+        }
+      }
+    },
+    {
+      "clock": "2024-03-14 23:00:00",
+      "wait_min": 3.21,
+      "fulfillment": 0.985,
+      "demand": 66,
+      "served": 65,
+      "incentive_spend_usd": 319.41,
+      "by_zone": {
+        "100": {
+          "wait": 3.2,
+          "demand": 12,
+          "idle": 15.1
+        },
+        "164": {
+          "wait": 3.2,
+          "demand": 8,
+          "idle": 13.8
+        },
+        "170": {
+          "wait": 3.2,
+          "demand": 3,
+          "idle": 16.5
+        },
+        "186": {
+          "wait": 3.2,
+          "demand": 26,
+          "idle": 32.4
+        },
+        "230": {
+          "wait": 3.2,
+          "demand": 17,
+          "idle": 16.7
+        }
+      }
+    }
+  ],
+  "events": [
+    "[DETECTED] 186 z=7.64 4.4x baseline",
+    "[TRIAGED] classified as arena_letout (emergency=False)",
+    "forecaster: severity=high peak_wait=11.2min",
+    "repositioner: plan v1 budget=$500 exp_wait=3.8 (no-action 4.0)",
+    "pricer: max surge 1.03x, cap basis normal",
+    "compliance: needs_changes - 1 rule(s) failed; plan must be revised before execution. | changes: ['Add WAV bonus in zones [170, 186, 230]']",
+    "supervisor: re-planning with feedback ['Add WAV bonus in zones [170, 186, 230]']",
+    "repositioner: plan v2 budget=$700 exp_wait=3.8 (no-action 4.0)",
+    "pricer: max surge 1.03x, cap basis normal",
+    "compliance: needs_human_approval - Plan is compliant; human approval required (R3_AUTO_APPROVE).",
+    "comms: 4 driver / 5 rider messages, 21 A2UI messages, 0 guardrail repairs",
+    "[READY] approved by ops-demo",
+    "[EXECUTING] committing plan inc-186-202403142230-c0-p2",
+    "[MONITORING] incentives live; monitoring KPIs",
+    "[MONITORING] 2024-03-14 22:30:00 wait=3.66min fulfillment=87% spend=$178",
+    "[MONITORING] 2024-03-14 22:45:00 wait=5.2min fulfillment=68% spend=$234",
+    "[MONITORING] KPIs degraded vs plan - re-assessing",
+    "forecaster: severity=high peak_wait=12.5min",
+    "repositioner: plan v1 budget=$600 exp_wait=3.4 (no-action 3.9)",
+    "pricer: max surge 1.10x, cap basis normal",
+    "compliance: needs_human_approval - Plan is compliant; human approval required (R3_AUTO_APPROVE).",
+    "comms: 2 driver / 5 rider messages, 17 A2UI messages, 0 guardrail repairs",
+    "[READY] approved by ops-demo",
+    "[EXECUTING] committing plan inc-186-202403142230-c1-p1",
+    "[MONITORING] incentives live; monitoring KPIs",
+    "[MONITORING] 2024-03-14 23:00:00 wait=3.21min fulfillment=98% spend=$319",
+    "[RESOLVING] recovered: wait 3.21 min, fulfillment 98%",
+    "[RESOLVING] incentives withdrawn; total spend $319",
+    "[POSTMORTEM] writing postmortem",
+    "[CLOSED] incident closed"
+  ],
+  "replans": 1,
+  "decision": {
+    "approved": true,
+    "by": "ops-demo"
+  },
+  "a2a_tasks": [
+    {
+      "skill": "assess",
+      "task_id": "bfeaef780f4c4b2886daff081043af6c",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "plan",
+      "task_id": "74895c4912e648279525632d87505477",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "price",
+      "task_id": "f7f0bdb3f13946e1a454aee3b284d8ce",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "review",
+      "task_id": "e51fbc82fee340b38d76f6e2259a150e",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "plan",
+      "task_id": "5ed97a67caf44938af1811e41492684e",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "price",
+      "task_id": "b33bece00ffe489bb4d7d155271aff68",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "review",
+      "task_id": "688f3f7396b24f01a32ba85cbb46cd56",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "compose",
+      "task_id": "1fee433180d24b13a18192fe2b7a844c",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "assess",
+      "task_id": "d661804d75d4411185f28be51c3f189d",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "plan",
+      "task_id": "912858ad2a904a068713d495a7282510",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "price",
+      "task_id": "8190d57edf5f4e91b88d8bca09289a12",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "review",
+      "task_id": "b6db19c928a04197a7692b68776ed228",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    },
+    {
+      "skill": "compose",
+      "task_id": "61f3329125f34a5cb1c3069db641442c",
+      "state": "completed",
+      "transitions": [
+        "submitted",
+        "working",
+        "completed"
+      ]
+    }
+  ],
+  "result": {
+    "resolved": true,
+    "spend": 319.41,
+    "postmortem": {
+      "title": "Postmortem - arena_letout at Penn Station/Madison Sq West",
+      "summary": "arena_letout at Penn Station/Madison Sq West; peak 3.7 min wait; resolved=True; spend $319.",
+      "timeline": [
+        "forecaster: severity=high peak_wait=12.5min",
+        "repositioner: plan v1 budget=$600 exp_wait=3.4 (no-action 3.9)",
+        "pricer: max surge 1.10x, cap basis normal",
+        "compliance: needs_human_approval - Plan is compliant; human approval required (R3_AUTO_APPROVE).",
+        "comms: 2 driver / 5 rider messages, 17 A2UI messages, 0 guardrail repairs",
+        "[READY] approved by ops-demo",
+        "[EXECUTING] committing plan inc-186-202403142230-c1-p1",
+        "[MONITORING] incentives live; monitoring KPIs",
+        "[MONITORING] 2024-03-14 23:00:00 wait=3.21min fulfillment=98% spend=$319",
+        "[RESOLVING] recovered: wait 3.21 min, fulfillment 98%",
+        "[RESOLVING] incentives withdrawn; total spend $319",
+        "[POSTMORTEM] writing postmortem"
+      ],
+      "what_worked": [
+        "Median wait fell from 3.7 to 3.2 min across affected zones.",
+        "Compliance loop caught 1 issue(s) before execution."
+      ],
+      "what_did_not": [
+        "No significant issues observed."
+      ],
+      "lessons": [
+        "For arena_letout at zone 186, pre-position ~30 min before forecast peak.",
+        "Size spillover-zone bonuses below the epicenter bonus."
+      ]
+    },
+    "final_wait": 3.21
+  }
+}
